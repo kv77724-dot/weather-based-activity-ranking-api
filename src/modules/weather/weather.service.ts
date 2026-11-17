@@ -1,6 +1,7 @@
 
-import { GeocodingClient } from "../../integrations/open-meteo/geocoding.client";
 import { ForecastClient } from "../../integrations/open-meteo/forecast.client";
+import { GeocodingClient } from "../../integrations/open-meteo/geocoding.client";
+import { WeatherData } from "./weather.interface";
 
 export class WeatherService {
     constructor(
@@ -8,7 +9,7 @@ export class WeatherService {
         private readonly forecastClient: ForecastClient
     ) { }
 
-    async getWeather(city: string) {
+    async getWeather(city: string): Promise<WeatherData> {
         const location = await this.geocodingClient.search(city);
 
         const forecast = await this.forecastClient.getForecast(
