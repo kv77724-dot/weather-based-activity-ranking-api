@@ -1,47 +1,24 @@
-
+import { WeatherService } from "../weather/weather.service";
 import { RecommendationsData } from "./recommendations.interface";
 
 export class RecommendationsService {
+    constructor(
+        private readonly weatherService: WeatherService
+    ) { }
+
     async getRecommendations(
         city: string
     ): Promise<RecommendationsData> {
+        const weather = await this.weatherService.getWeather(city);
+
+        console.log('Waather', weather);
+
         return {
             recommendations: {
-                skiing: [
-                    {
-                        rank: 1,
-                        date: "2026-11-17",
-                        score: 78,
-                    },
-                    {
-                        rank: 2,
-                        date: "2026-11-18",
-                        score: 72,
-                    },
-                ],
-                surfing: [
-                    {
-                        rank: 1,
-                        date: "2026-11-19",
-                        score: 85,
-                    },
-                ],
-
-                outdoorSightseeing: [
-                    {
-                        rank: 1,
-                        date: "2026-11-20",
-                        score: 91,
-                    },
-                ],
-
-                indoorSightseeing: [
-                    {
-                        rank: 1,
-                        date: "2026-11-21",
-                        score: 88,
-                    },
-                ],
+                skiing: [],
+                surfing: [],
+                outdoorSightseeing: [],
+                indoorSightseeing: [],
             }
         }
     }
