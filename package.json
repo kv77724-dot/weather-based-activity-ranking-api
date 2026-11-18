@@ -11,13 +11,16 @@
         "type-check": "tsc --noEmit"
     },
     "dependencies": {
-        "cors": "^2.8.5",
+        "@apollo/server": "^5.5.2",
+        "@as-integrations/express5": "^1.1.2",
+        "cors": "^2.8.6",
         "express": "^5.1.0",
+        "graphql": "^16.15.0",
         "helmet": "^8.1.0",
         "zod": "^3.24.2"
     },
     "devDependencies": {
-        "@types/cors": "^2.8.17",
+        "@types/cors": "^2.8.19",
         "@types/express": "^5.0.1",
         "@types/node": "^22.13.10",
         "tsx": "^4.19.3",

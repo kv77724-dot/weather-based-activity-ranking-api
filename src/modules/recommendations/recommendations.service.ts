@@ -5,7 +5,7 @@ import { SkiingStrategy } from "../activities/strategies/skiing.strategy";
 import { SurfingStrategy } from "../activities/strategies/surfing.strategy";
 import { DailyWeather } from "../weather/weather.interface";
 import { WeatherService } from "../weather/weather.service";
-import { RankedDay, RecommendationsData } from "./recommendations.interface";
+import { ActivityRecommendations, RankedDay } from "./recommendations.interface";
 
 export class RecommendationsService {
     private readonly skiingStrategy = new SkiingStrategy();
@@ -19,23 +19,21 @@ export class RecommendationsService {
 
     async getRecommendations(
         city: string
-    ): Promise<RecommendationsData> {
+    ): Promise<ActivityRecommendations> {
         const weather = await this.weatherService.getWeather(city);
 
         return {
-            recommendations: {
-                skiing: this.rankDays(weather.days, this.skiingStrategy),
-                surfing: this.rankDays(weather.days, this.surfingStrategy),
-                outdoorSightseeing: this.rankDays(
-                    weather.days,
-                    this.outdoorStrategy
-                ),
-                indoorSightseeing: this.rankDays(
-                    weather.days,
-                    this.indoorStrategy
-                ),
+            skiing: this.rankDays(weather.days, this.skiingStrategy),
+            surfing: this.rankDays(weather.days, this.surfingStrategy),
+            outdoorSightseeing: this.rankDays(
+                weather.days,
+                this.outdoorStrategy
+            ),
+            indoorSightseeing: this.rankDays(
+                weather.days,
+                this.indoorStrategy
+            ),
 
-            }
         }
     }
 
