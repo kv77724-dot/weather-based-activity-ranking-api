@@ -1,6 +1,7 @@
 import { ForecastClient } from "../../integrations/open-meteo/forecast.client";
 import { GeocodingClient } from "../../integrations/open-meteo/geocoding.client";
 import { MarineClient } from "../../integrations/open-meteo/marine.client";
+import { GeocodingResult } from "../../integrations/open-meteo/open-meteo.types";
 import { WeatherData } from "./weather.interface";
 
 export class WeatherService {
@@ -10,14 +11,12 @@ export class WeatherService {
         private readonly marineClient: MarineClient
     ) { }
 
-    async getWeather(city: string): Promise<WeatherData> {
+    async getGeoLocationFromCity(city: string): Promise<GeocodingResult> {
         const location = await this.geocodingClient.search(city);
+        return location
+    }
 
-        // const forecast = await this.forecastClient.getForecast(
-        //     location.latitude,
-        //     location.longitude
-        // );
-
+    async getWeatherByCoordinates(location: GeocodingResult): Promise<WeatherData> {
         const [forecast, marine] = await Promise.all([
             this.forecastClient.getForecast(
                 location.latitude,
