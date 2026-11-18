@@ -4,6 +4,7 @@ import { createGraphQLMiddleware } from "./graphql";
 import { ForecastClient } from "./integrations/open-meteo/forecast.client";
 import { GeocodingClient } from "./integrations/open-meteo/geocoding.client";
 import { MarineClient } from "./integrations/open-meteo/marine.client";
+import { RedisCacheService } from "./integrations/redis/redis-cache.service";
 import { RecommendationsService } from "./modules/recommendations/recommendations.service";
 import { WeatherService } from "./modules/weather/weather.service";
 
@@ -17,8 +18,11 @@ const weatherService = new WeatherService(
     new MarineClient()
 );
 
+const redisService = new RedisCacheService()
+
 const recommendationsService = new RecommendationsService(
-    weatherService
+    weatherService,
+    redisService
 );
 
 export const configureGraphQL = async () => {
