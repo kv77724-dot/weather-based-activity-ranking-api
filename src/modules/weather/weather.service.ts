@@ -13,11 +13,6 @@ export class WeatherService {
     async getWeather(city: string): Promise<WeatherData> {
         const location = await this.geocodingClient.search(city);
 
-        // const forecast = await this.forecastClient.getForecast(
-        //     location.latitude,
-        //     location.longitude
-        // );
-
         const [forecast, marine] = await Promise.all([
             this.forecastClient.getForecast(
                 location.latitude,

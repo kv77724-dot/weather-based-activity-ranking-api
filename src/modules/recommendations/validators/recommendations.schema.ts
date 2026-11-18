@@ -1,10 +1,9 @@
 import { z } from "zod";
 
-export const recommendationsQuerySchema = z.object({
+export const recommendationsSchema = z.object({
     city: z
-        .string({
-            required_error: "Please enter a city name.",
-        })
+        .string()
         .trim()
-        .min(1, "Please enter a city name."),
+        .min(2, "City name must contain at least 2 characters")
+        .max(100, "City name must not exceed 100 characters"),
 });

@@ -6,6 +6,7 @@ import { SurfingStrategy } from "../activities/strategies/surfing.strategy";
 import { DailyWeather } from "../weather/weather.interface";
 import { WeatherService } from "../weather/weather.service";
 import { ActivityRecommendations, RankedDay } from "./recommendations.interface";
+import { recommendationsSchema } from "./validators/recommendations.schema";
 
 export class RecommendationsService {
     private readonly skiingStrategy = new SkiingStrategy();
@@ -20,7 +21,9 @@ export class RecommendationsService {
     async getRecommendations(
         city: string
     ): Promise<ActivityRecommendations> {
-        const weather = await this.weatherService.getWeather(city);
+        const validatedInput = recommendationsSchema.parse({ city });
+
+        const weather = await this.weatherService.getWeather(validatedInput.city);
 
         return {
             skiing: this.rankDays(weather.days, this.skiingStrategy),
