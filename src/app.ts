@@ -1,12 +1,33 @@
 import express from "express";
-import recommendationsRoutes from "./modules/recommendations/recommendations.routes";
 import { globalErrorHandler } from "./common/middleware/error-handler";
+import { createGraphQLMiddleware } from "./graphql";
+import { ForecastClient } from "./integrations/open-meteo/forecast.client";
+import { GeocodingClient } from "./integrations/open-meteo/geocoding.client";
+import { MarineClient } from "./integrations/open-meteo/marine.client";
+import { RecommendationsService } from "./modules/recommendations/recommendations.service";
+import { WeatherService } from "./modules/weather/weather.service";
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/api/v1/recommendations", recommendationsRoutes);
+const weatherService = new WeatherService(
+    new GeocodingClient(),
+    new ForecastClient(),
+    new MarineClient()
+);
+
+const recommendationsService = new RecommendationsService(
+    weatherService
+);
+
+export const configureGraphQL = async () => {
+    const graphqlMiddleware = await createGraphQLMiddleware(
+        recommendationsService
+    );
+
+    app.use("/graphql", graphqlMiddleware);
+};
 
 app.use(globalErrorHandler);
 

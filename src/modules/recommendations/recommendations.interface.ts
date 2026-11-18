@@ -16,7 +16,3 @@ export interface ActivityRecommendations {
     outdoorSightseeing: RankedDay[];
     indoorSightseeing: RankedDay[];
 }
-
-export interface RecommendationsData {
-    recommendations: ActivityRecommendations;
-}
