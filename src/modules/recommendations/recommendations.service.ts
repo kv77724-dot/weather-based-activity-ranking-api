@@ -10,7 +10,7 @@ import { RecommendationsCache } from "./recommendations-cache.interface";
 import { ActivityRecommendations, RankedDay } from "./recommendations.interface";
 import { recommendationsSchema } from "./validators/recommendations.schema";
 
-const CACHE_TTL = 30 * 60;
+const CACHE_TTL = process.env.CACHE_TTL_SECONDS ?? 30 * 60;
 
 export class RecommendationsService {
     private readonly skiingStrategy = new SkiingStrategy();
@@ -72,7 +72,7 @@ export class RecommendationsService {
             await this.redisCacheService.set(
                 cacheKey,
                 cacheData,
-                CACHE_TTL
+                Number(CACHE_TTL)
             );
 
             console.log("Recommendations cached:", cacheKey);
