@@ -34,3 +34,17 @@ export interface ForecastResponse {
         cloud_cover_mean: (number | null)[];
     };
 }
+
+export interface MarineResponse {
+    latitude: number;
+    longitude: number;
+    timezone: string;
+    daily: {
+        time: string[];
+        wave_height_max: number[];
+        wave_period_max: number[];
+        swell_wave_height_max: number[];
+        swell_wave_period_max: number[];
+    };
+    error?: boolean;
+}

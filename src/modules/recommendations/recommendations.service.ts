@@ -30,6 +30,7 @@ export class RecommendationsService {
                 score: day.score,
             }));
 
+        console.log('marine data', weather.days);
         return {
             recommendations: {
                 skiing,

@@ -4,10 +4,11 @@ import { GeocodingClient } from "../../integrations/open-meteo/geocoding.client"
 import { WeatherService } from "../weather/weather.service";
 import { RecommendationsController } from "./recommendations.controller";
 import { RecommendationsService } from "./recommendations.service";
+import { MarineClient } from "../../integrations/open-meteo/marine.client";
 
 const router = Router();
 
-const weatherService = new WeatherService(new GeocodingClient(), new ForecastClient())
+const weatherService = new WeatherService(new GeocodingClient(), new ForecastClient(), new MarineClient())
 const recommendationsService = new RecommendationsService(weatherService);
 
 const recommendationsController = new RecommendationsController(

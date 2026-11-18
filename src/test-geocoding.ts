@@ -36,27 +36,44 @@
 
 // main();
 
-import { SkiingStrategy } from "./modules/activities/strategies/skiing.strategy";
 import { SurfingStrategy } from "./modules/activities/strategies/surfing.strategy";
 import { DailyWeather } from "./modules/weather/weather.interface";
+import { MarineClient } from "./integrations/open-meteo/marine.client";
 
-const strategy = new SurfingStrategy();
-// const strategy = new SkiingStrategy();
 
-const weather: DailyWeather = {
-  date: "2026-11-18",
-  temperature: {
-    min: -5,
-    max: 2,
-  },
-  precipitationProbability: 20,
-  precipitation: 2,
-  snowfall: 12,
-  windSpeed: 10,
-  windGusts: 18,
-  cloudCover: 25,
-};
+// const strategy = new SurfingStrategy();
+// // const strategy = new SkiingStrategy();
 
-const score = strategy.calculateScore(weather);
+// const weather: DailyWeather = {
+//   date: "2026-11-18",
+//   temperature: {
+//     min: -5,
+//     max: 2,
+//   },
+//   precipitationProbability: 20,
+//   precipitation: 2,
+//   snowfall: 12,
+//   windSpeed: 10,
+//   windGusts: 18,
+//   cloudCover: 25,
+// };
 
-console.log("skiing", score);
+// const score = strategy.calculateScore(weather);
+
+
+async function main() {
+  const marineClient = new MarineClient();
+
+  try {
+    const result = await marineClient.getMarineForecast(
+      19.076,
+      72.8777
+    );
+
+    console.log(JSON.stringify(result, null, 2));
+  } catch (error) {
+    console.error("Marine API test failed:", error);
+  }
+}
+
+main()
