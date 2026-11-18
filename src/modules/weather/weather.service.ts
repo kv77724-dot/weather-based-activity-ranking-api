@@ -1,4 +1,3 @@
-
 import { ForecastClient } from "../../integrations/open-meteo/forecast.client";
 import { GeocodingClient } from "../../integrations/open-meteo/geocoding.client";
 import { WeatherData } from "./weather.interface";
