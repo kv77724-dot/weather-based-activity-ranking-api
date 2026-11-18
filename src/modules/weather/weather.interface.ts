@@ -18,6 +18,10 @@ export interface DailyWeather {
     windSpeed: number | null;
     windGusts: number | null;
     cloudCover: number | null;
+    waveHeight: number | null;
+    wavePeriod: number | null;
+    swellHeight: number | null;
+    swellPeriod: number | null;
 }
 
 export interface WeatherData {

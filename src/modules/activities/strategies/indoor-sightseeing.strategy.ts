@@ -1,14 +1,17 @@
 
 import { ActivityStrategy } from "./activity.strategy";
 import { DailyWeather } from "../../weather/weather.interface";
+import { activityScoringConfig } from "../configs/activity-scoring.config";
+
+const indoorScoringConfig = activityScoringConfig.indoorSightseeing;
 
 export class IndoorSightseeingStrategy implements ActivityStrategy {
     calculateScore(weather: DailyWeather): number | null {
         const scores = [
-            { score: this.getPrecipitationScore(weather.precipitation), weight: 40 },
-            { score: this.getTemperatureScore(weather.temperature.max), weight: 25 },
-            { score: this.getWindSpeedScore(weather.windSpeed), weight: 20 },
-            { score: this.getCloudCoverScore(weather.cloudCover), weight: 15 },
+            { score: this.getPrecipitationScore(weather.precipitation), weight: indoorScoringConfig.weights.precipitation },
+            { score: this.getTemperatureScore(weather.temperature.max), weight: indoorScoringConfig.weights.temperature },
+            { score: this.getWindSpeedScore(weather.windSpeed), weight: indoorScoringConfig.weights.windSpeed },
+            { score: this.getCloudCoverScore(weather.cloudCover), weight: indoorScoringConfig.weights.cloudCover },
         ];
 
         const available = scores.filter((item) => item.score !== null);

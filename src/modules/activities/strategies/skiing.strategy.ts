@@ -1,6 +1,8 @@
 import { DailyWeather } from "../../weather/weather.interface";
-import { skiingScoringConfig } from "../configs/activity-scoring.config";
+import { activityScoringConfig } from "../configs/activity-scoring.config";
 import { ActivityStrategy } from "./activity.strategy";
+
+const skiingScoringConfig = activityScoringConfig.skiing;
 
 export class SkiingStrategy implements ActivityStrategy {
     calculateScore(weather: DailyWeather): number | null {
